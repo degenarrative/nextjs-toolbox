@@ -27,14 +27,6 @@ export default function Home() {
       <main>
         <Header title="Next.js Toolbox" />
         <hr />
-        <p className="description">
-          Please enter your birth information to get your astrological reading:
-        </p>
-        <div className="picker-container">
-          <DatePicker value={birthDate} onChange={setBirthDate} />
-          <TimePicker value={birthTime} onChange={setBirthTime} />
-          <LocationPicker value={birthLocation} onChange={setBirthLocation} />
-        </div>
         <FeedbackForm
           birthDate={birthDate}
           birthTime={birthTime}
