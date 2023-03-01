@@ -3,8 +3,20 @@ import Header from "@components/Header";
 import Footer from "@components/Footer";
 import FeedbackForm from "@components/FeedbackForm";
 import JokeBlock from "@components/JokeBlock";
+import { useState } from "react";
+import TimePicker from "@components/TimePicker";
+import DatePicker from "@components/DatePicker";
+import LocationPicker from "@components/LocationPicker";
 
 export default function Home() {
+  const [birthDate, setBirthDate] = useState(null);
+  const [birthTime, setBirthTime] = useState(null);
+  const [birthLocation, setBirthLocation] = useState(null);
+
+  const handleFormSubmit = (formData) => {
+    console.log("Form data:", formData);
+  };
+
   return (
     <div className="container">
       <Head>
@@ -16,10 +28,19 @@ export default function Home() {
         <Header title="Next.js Toolbox" />
         <hr />
         <p className="description">
-          Here's an example of a Netlify Form! When you fill this out, the
-          submissions can be found in the Netlify Admin site.
+          Please enter your birth information to get your astrological reading:
         </p>
-        <FeedbackForm />
+        <div className="picker-container">
+          <DatePicker value={birthDate} onChange={setBirthDate} />
+          <TimePicker value={birthTime} onChange={setBirthTime} />
+          <LocationPicker value={birthLocation} onChange={setBirthLocation} />
+        </div>
+        <FeedbackForm
+          birthDate={birthDate}
+          birthTime={birthTime}
+          birthLocation={birthLocation}
+          onFormSubmit={handleFormSubmit}
+        />
         <JokeBlock />
       </main>
       <Footer />
