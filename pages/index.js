@@ -41,7 +41,6 @@ export default function Home() {
           birthLocation={birthLocation}
           onFormSubmit={handleFormSubmit}
         />
-        <JokeBlock />
       </main>
       <Footer />
     </div>
