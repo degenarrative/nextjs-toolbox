@@ -1,5 +1,6 @@
 import styles from './FeedbackForm.module.css'
 import { useState } from 'react';
+import { compute } from 'ephemeris-moshier';
 
 export default function FeedbackForm() {
   const [loading, setLoading] = useState(false);
@@ -29,8 +30,9 @@ export default function FeedbackForm() {
       });
       if (response.ok) {
         const data = await response.json();
+        const report = compute(data.lon, data.lat, data.tz, birthDateTimeUTC);
         setSuccess(true);
-        console.log(data); // replace with your own report generation code
+        console.log(report); // replace with your own report generation code
       } else {
         setError(true);
       }
@@ -80,3 +82,4 @@ export default function FeedbackForm() {
     </form>
   )
 }
+
