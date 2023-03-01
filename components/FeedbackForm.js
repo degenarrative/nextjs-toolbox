@@ -1,6 +1,6 @@
-import styles from './FeedbackForm.module.css'
+import styles from './FeedbackForm.module.css';
 import { useState } from 'react';
-import { compute } from 'ephemeris-moshier';
+import AstroChart from 'astrochart';
 
 export default function FeedbackForm() {
   const [loading, setLoading] = useState(false);
@@ -23,19 +23,13 @@ export default function FeedbackForm() {
     setSuccess(false);
 
     try {
-      const response = await fetch('/api/astrology', {
-        method: 'POST',
-        body: JSON.stringify({ datetime: birthDateTimeUTC, location: birthLocation }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        const report = compute(data.lon, data.lat, data.tz, birthDateTimeUTC);
-        setSuccess(true);
-        console.log(report); // replace with your own report generation code
-      } else {
-        setError(true);
-      }
+      const chart = new AstroChart();
+      await chart.setBirthDateTime(birthDateTimeUTC);
+      await chart.setBirthPlace(birthLocation);
+      const chartData = await chart.getChartData();
+
+      setSuccess(true);
+      console.log(chartData); // replace with your own report generation code
     } catch (error) {
       console.error(error);
       setError(true);
@@ -80,6 +74,6 @@ export default function FeedbackForm() {
       {error && <p className={styles.error}>An error occurred. Please try again.</p>}
       {success && <p className={styles.success}>Thank you for your feedback!</p>}
     </form>
-  )
+  );
 }
 
